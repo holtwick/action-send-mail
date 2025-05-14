@@ -1,40 +1,40 @@
-name: 'Send E-Mail (SMTP)'
-description: 'Sending Email via SMTP'
+name: "Send E-Mail (SMTP)"
+description: "Sending Email via SMTP"
 branding:
-  icon: 'mail'
-  color: 'orange'
+  icon: "mail"
+  color: "orange"
 inputs:
   smtp-server:
-    description: 'The smtp server to use'
+    description: "The smtp server to use"
     required: true
   smtp-port:
-    description: 'The smtp port to use'
+    description: "The smtp port to use"
     required: false
-    default: '465'
+    default: "465"
   smtp-secure:
-    description: 'If the smtp server uses ssl'
+    description: "If the smtp server uses ssl"
     required: false
-    default: 'true'
+    default: "true"
   from-email:
-    description: 'The sender of the mail'
+    description: "The sender of the mail"
     required: true
   to-email:
-    description: 'The recipients of the mail seperated by comma'
+    description: "The recipients of the mail seperated by comma"
     required: true
   username:
-    description: 'The username of the mail account'
+    description: "The username of the mail account"
     required: true
   password:
-    description: 'The password of the mail account'
+    description: "The password of the mail account"
     required: true
   subject:
-    description: 'The subject of the mail'
+    description: "The subject of the mail"
     required: true
   body:
-    description: 'The body of the mail'
+    description: "The body of the mail"
   html:
-    description: 'HTML Content of the mail'
+    description: "HTML Content of the mail"
 
 runs:
-  using: 'node20'
-  main: 'dist/index.js'
+  using: node20
+  main: "dist/index.js"

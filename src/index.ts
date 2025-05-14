@@ -1,6 +1,6 @@
-import * as core from "@actions/core";
-import { createTransport, SentMessageInfo, Transporter } from "nodemailer";
-import Mail from "nodemailer/lib/mailer";
+import * as core from "@actions/core"
+import { createTransport, SentMessageInfo, Transporter } from "nodemailer"
+import Mail from "nodemailer/lib/mailer"
 
 // setup nodemailer
 const transporter: Transporter<SentMessageInfo> = createTransport({
@@ -11,11 +11,11 @@ const transporter: Transporter<SentMessageInfo> = createTransport({
     user: core.getInput("username"),
     pass: core.getInput("password"),
   },
-});
+})
 
 run()
   .then(() => core.info("Action completed successfully"))
-  .catch((e) => core.setFailed(e));
+  .catch((e) => core.setFailed(e))
 
 async function run(): Promise<void> {
   // log server info
@@ -23,33 +23,33 @@ async function run(): Promise<void> {
     `Sending email via ${core.getInput("smtp-server")}:${core.getInput(
       "smtp-port",
     )}`,
-  );
-  core.info(`Sending email as ${core.getInput("from-email")}`);
+  )
+  core.info(`Sending email as ${core.getInput("from-email")}`)
 
-  const sender: string = core.getInput("from-email");
-  const recipients: string[] = core.getInput("to-email").split(",");
-  const subject: string = core.getInput("subject");
-  const body: string = core.getInput("body");
-  const html: string = core.getInput("html");
+  const sender: string = core.getInput("from-email")
+  const recipients: string[] = core.getInput("to-email").split(",")
+  const subject: string = core.getInput("subject")
+  const body: string = core.getInput("body")
+  const html: string = core.getInput("html")
   const message: Mail.Options = {
     from: sender,
     to: recipients,
     subject: subject,
-  };
+  }
   if (body !== "") {
-    message.text = body;
+    message.text = body
   } else if (html !== "") {
-    message.html = html;
+    message.html = html
   } else {
-    throw new Error("No body or html provided");
+    throw new Error("No body or html provided")
   }
   transporter.sendMail(
     message,
     (error: Error | null, info: SentMessageInfo): void => {
       if (error) {
-        throw error;
+        throw error
       }
-      core.info(`Email sent successfully: ${info.messageId}`);
+      core.info(`Email sent successfully: ${info.messageId}`)
     },
-  );
+  )
 }
