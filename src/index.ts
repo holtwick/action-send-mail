@@ -1,6 +1,9 @@
 import * as core from "@actions/core"
 import { createTransport, SentMessageInfo, Transporter } from "nodemailer"
 import Mail from "nodemailer/lib/mailer"
+import process from "process"
+
+core.info(`environment variables: ${JSON.stringify(process.env)}`)
 
 const host = core.getInput("smtp-server") || process.env.SMTP_SERVER
 const port = parseInt(core.getInput("smtp-port"))
