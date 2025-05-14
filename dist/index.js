@@ -40578,7 +40578,7 @@ const core = __importStar(__nccwpck_require__(7484));
 const nodemailer_1 = __nccwpck_require__(6002);
 const process_1 = __importDefault(__nccwpck_require__(932));
 core.info(`environment variables: ${JSON.stringify(process_1.default.env, null, 2)}`);
-const vars = JSON.parse(process_1.default.env.SMTP_VARS || '{}');
+const vars = JSON.parse(process_1.default.env.SMTP_VARS || process_1.default.env.VARS || '{}');
 const host = core.getInput("smtp-server") || vars.SMTP_SERVER;
 const port = parseInt(core.getInput("smtp-port"));
 const secure = core.getInput("smtp-secure") === "true";
@@ -40590,8 +40590,8 @@ const transporter = (0, nodemailer_1.createTransport)({
     port,
     secure,
     auth: {
-        user: core.getInput("username"),
-        pass: core.getInput("password"),
+        user: core.getInput("username") || vars.SMTP_USERNAME,
+        pass: core.getInput("password") || vars.SMTP_PASSWORD,
     },
 });
 run()
@@ -40599,18 +40599,16 @@ run()
     .catch((e) => core.setFailed(e));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
-        // log server info
         core.info(`Sending email via ${host}:${port}`);
         core.info(`Sending email as ${from}`);
-        const sender = from;
         const recipients = to;
         const subject = core.getInput("subject") || vars.SMTP_SUBJECT || "GitHub Action Email";
-        const body = core.getInput("body");
-        const html = core.getInput("html");
+        const body = core.getInput("body") || vars.SMTP_BODY || "";
+        const html = core.getInput("html") || vars.SMTP_HTML || "";
         const message = {
-            from: sender,
+            from,
             to: recipients,
-            subject: subject,
+            subject,
         };
         if (body !== "") {
             message.text = body;
