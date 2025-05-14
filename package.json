@@ -1,6 +1,6 @@
 {
   "name": "action-send-mail",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Action to send Mails via AWS SES",
   "main": "index.js",
   "scripts": {
