@@ -5,7 +5,7 @@ import process from "process"
 
 core.info(`environment variables: ${JSON.stringify(process.env, null, 2)}`)
 
-const vars = JSON.parse(process.env.SMTP_VARS || '{}')
+const vars = JSON.parse(process.env.SMTP_VARS || process.env.VARS || '{}')
 
 const host = core.getInput("smtp-server") || vars.SMTP_SERVER
 const port = parseInt(core.getInput("smtp-port"))
@@ -19,8 +19,8 @@ const transporter: Transporter<SentMessageInfo> = createTransport({
   port,
   secure,
   auth: {
-    user: core.getInput("username"),
-    pass: core.getInput("password"),
+    user: core.getInput("username") || vars.SMTP_USERNAME,
+    pass: core.getInput("password") || vars.SMTP_PASSWORD,
   },
 })
 
@@ -29,19 +29,17 @@ run()
   .catch((e) => core.setFailed(e))
 
 async function run(): Promise<void> {
-  // log server info
   core.info(`Sending email via ${host}:${port}`)
   core.info(`Sending email as ${from}`)
 
-  const sender: string = from
   const recipients: string[] = to
   const subject: string = core.getInput("subject") || vars.SMTP_SUBJECT || "GitHub Action Email"
-  const body: string = core.getInput("body")
-  const html: string = core.getInput("html")
+  const body: string = core.getInput("body") || vars.SMTP_BODY || ""
+  const html: string = core.getInput("html") || vars.SMTP_HTML || ""
   const message: Mail.Options = {
-    from: sender,
+    from,
     to: recipients,
-    subject: subject,
+    subject,
   }
   if (body !== "") {
     message.text = body

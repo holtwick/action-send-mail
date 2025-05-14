@@ -31,18 +31,22 @@ This action allows you to send emails using SMTP. It's perfect for sending notif
 ### `to-email`
 
 **Description**: The recipients of the mail, separated by commas.  
+**env**: `SMTP_TO`
 
 ### `username`
 
 **Description**: The username of the mail account.  
+**env**: `SMTP_USERNAME`
 
 ### `password`
 
 **Description**: The password of the mail account.  
+**env**: `SMTP_PASSWORD`
 
 ### `subject`
 
 **Description**: The subject of the mail.  
+**env**: `SMTP_SUBJECT`
 
 ### `body`
 
@@ -59,7 +63,7 @@ This action allows you to send emails using SMTP. It's perfect for sending notif
 ```yaml
 steps:
   - name: Send Email
-    uses: hilarion5/send-mail@v1
+    uses: holtwick/action-send-mail@main
     with:
       smtp-server: smtp.example.com
       smtp-port: 465
@@ -73,3 +77,17 @@ steps:
       html: |
         <h1>This is a test email</h1>
         <p>Test Paragraph</p>
+```
+
+Alternative with defined SMTP variables:
+
+```yaml
+steps:
+  - name: Send Email    
+    uses: holtwick/action-send-mail@main
+    env:
+      SMTP_VARS: ${{ toJSON(vars) }}
+    with:
+      subject: 🍀 Action Success for ${{ gitea.repository }}
+      body: See https://codeberg.org/${{ gitea.repository }}/actions/runs/${{ gitea.run_number }}
+ ```
