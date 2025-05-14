@@ -11,6 +11,7 @@ This action allows you to send emails using SMTP. It's perfect for sending notif
 ### `smtp-server`
 
 **Description**: The SMTP server to use.  
+**env**: `SMTP_SERVER`
 
 ### `smtp-port`
 
@@ -24,7 +25,8 @@ This action allows you to send emails using SMTP. It's perfect for sending notif
 
 ### `from-email`
 
-**Description**: The email address the mail gets sent from. 
+**Description**: The email address the mail gets sent from.
+**env**: `SMTP_FROM`
 
 ### `to-email`
 

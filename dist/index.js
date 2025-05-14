@@ -40570,14 +40570,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(7484));
 const nodemailer_1 = __nccwpck_require__(6002);
-const host = core.getInput("smtp-server") || process.env.SMTP_SERVER;
+const process_1 = __importDefault(__nccwpck_require__(932));
+core.info(`environment variables: ${JSON.stringify(process_1.default.env)}`);
+const host = core.getInput("smtp-server") || process_1.default.env.SMTP_SERVER;
 const port = parseInt(core.getInput("smtp-port"));
 const secure = core.getInput("smtp-secure") === "true";
-const from = core.getInput("from-email") || process.env.SMTP_FROM || "action@example.com";
-const to = (core.getInput("to-email") || process.env.SMTP_TO || '').split(",");
+const from = core.getInput("from-email") || process_1.default.env.SMTP_FROM || "action@example.com";
+const to = (core.getInput("to-email") || process_1.default.env.SMTP_TO || '').split(",");
 // setup nodemailer
 const transporter = (0, nodemailer_1.createTransport)({
     host,
@@ -40598,7 +40603,7 @@ function run() {
         core.info(`Sending email as ${from}`);
         const sender = from;
         const recipients = to;
-        const subject = core.getInput("subject") || process.env.SMTP_SUBJECT || "GitHub Action Email";
+        const subject = core.getInput("subject") || process_1.default.env.SMTP_SUBJECT || "GitHub Action Email";
         const body = core.getInput("body");
         const html = core.getInput("html");
         const message = {
@@ -40792,6 +40797,14 @@ module.exports = require("path");
 
 "use strict";
 module.exports = require("perf_hooks");
+
+/***/ }),
+
+/***/ 932:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("process");
 
 /***/ }),
 
