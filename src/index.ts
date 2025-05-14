@@ -2,11 +2,17 @@ import * as core from "@actions/core"
 import { createTransport, SentMessageInfo, Transporter } from "nodemailer"
 import Mail from "nodemailer/lib/mailer"
 
+const host = core.getInput("smtp-server") || process.env.SMTP_SERVER
+const port = parseInt(core.getInput("smtp-port"))
+const secure = core.getInput("smtp-secure") === "true"
+const from = core.getInput("from-email") || process.env.SMTP_FROM || "action@example.com"
+const to = (core.getInput("to-email") || process.env.SMTP_TO || '').split(",")
+
 // setup nodemailer
 const transporter: Transporter<SentMessageInfo> = createTransport({
-  host: core.getInput("smtp-server"),
-  port: parseInt(core.getInput("smtp-port")),
-  secure: core.getInput("smtp-secure") === "true",
+  host,
+  port,
+  secure,
   auth: {
     user: core.getInput("username"),
     pass: core.getInput("password"),
@@ -19,16 +25,12 @@ run()
 
 async function run(): Promise<void> {
   // log server info
-  core.info(
-    `Sending email via ${core.getInput("smtp-server")}:${core.getInput(
-      "smtp-port",
-    )}`,
-  )
-  core.info(`Sending email as ${core.getInput("from-email")}`)
+  core.info(`Sending email via ${host}:${port}`)
+  core.info(`Sending email as ${from}`)
 
-  const sender: string = core.getInput("from-email")
-  const recipients: string[] = core.getInput("to-email").split(",")
-  const subject: string = core.getInput("subject")
+  const sender: string = from
+  const recipients: string[] = to
+  const subject: string = core.getInput("subject") || process.env.SMTP_SUBJECT || "GitHub Action Email"
   const body: string = core.getInput("body")
   const html: string = core.getInput("html")
   const message: Mail.Options = {
