@@ -6,7 +6,7 @@ branding:
 inputs:
   smtp-server:
     description: "The smtp server to use"
-    required: true
+    required: false
   smtp-port:
     description: "The smtp port to use"
     required: false
@@ -17,19 +17,19 @@ inputs:
     default: "true"
   from-email:
     description: "The sender of the mail"
-    required: true
+    required: false
   to-email:
     description: "The recipients of the mail seperated by comma"
-    required: true
+    required: false
   username:
     description: "The username of the mail account"
-    required: true
+    required: false
   password:
     description: "The password of the mail account"
-    required: true
+    required: false
   subject:
     description: "The subject of the mail"
-    required: true
+    required: false
   body:
     description: "The body of the mail"
   html:
