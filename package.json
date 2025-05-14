@@ -1,24 +1,14 @@
 {
-  "name": "send-mail",
+  "name": "action-send-mail",
   "version": "1.0.0",
   "description": "Action to send Mails via AWS SES",
   "main": "index.js",
   "scripts": {
     "build": "ncc build src/index.ts --license licenses.txt",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "format:write": "prettier --write **/*.ts",
-    "format:check": "prettier --check **/*.ts"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/hilarion5/send-mail.git"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Andreas Rainer",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/hilarion5/send-mail/issues"
-  },
-  "homepage": "https://github.com/hilarion5/send-mail#readme",
   "keywords": [
     "actions",
     "node",
@@ -39,7 +29,6 @@
   },
   "devDependencies": {
     "@vercel/ncc": "^0.38.3",
-    "prettier": "^3.5.3",
     "typescript": "^5.8.3"
   }
 }
